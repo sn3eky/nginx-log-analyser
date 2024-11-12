@@ -8,4 +8,15 @@ top5_IP(){
         printf "%s - %s requests\n" "$ip" "$count"
     done
 }
+
+top5_path(){
+    log_file='nginx-access.log'
+    echo "Top 5 requested paths"
+    awk '{print $7}' "$log_file" | sort | uniq -c | sort -nr | head -n 5 | while read -r count paths; do
+        printf "%s - %s requests\n" "$paths" "$count"
+    done
+}
+
 top5_IP
+echo ""
+top5_path
